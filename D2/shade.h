@@ -60,7 +60,7 @@ private:
 		Instant();
 		template<const std::string_view& label>
 		void Texture(const unsigned id) const {
-			Base::Texture(Textures::Index<label>::value, id);
+			Base::Texture(Textures::Index(label), id);
 		}
 		template<const std::string_view& label>
 		void Vertex(Attributes::template Value<Attributes::template Index<label>::value>::template type attr) const {
