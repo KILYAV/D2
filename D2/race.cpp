@@ -30,10 +30,11 @@ Race Race::GetRace() {
 	}
 
 	Shade::race.Texture<shade::texture::land>(land.at(race::imperial).ID());
+	Shade::race.Vertex<shade::atribute::in_land_region>(land.at(race::imperial).Region());
 
 	auto windows{ glfwGetCurrentContext() };
 	while (!glfwWindowShouldClose(windows)) {
-
+		Shade::race.Run();
 	}
 
 	return Race{ race::neutral };
