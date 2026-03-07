@@ -17,7 +17,7 @@ vec2 Point(const vec4 value, const int index) {
 
 void main() {
 	for (int index = 0; index < 4; ++index) {
-		gl_Position = vec4(Point(land_region[0], index), 0, 1);
+		gl_Position = vec4(Point(vec4(+1,+1,-1,-1)/*land_region[0]*/, index), 0, 1);
 		land_texture_coord = Point(vec4(1,1,0,0), index);
 		EmitVertex();
 	}

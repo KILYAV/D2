@@ -23,9 +23,9 @@ namespace shade::block {
 	using race = expr::labels<uniform::buffer::label::frame>;
 }
 namespace shade::atribute {
-	constexpr std::string_view land_size_pos{ "land_size_pos" };
+	constexpr std::string_view in_land_region{ "in_land_region" };
 
-	using race = expr::tuple<expr::value<land_size_pos, glm::ivec4>>;
+	using race = expr::tuple<expr::value<in_land_region, glm::ivec4>>;
 }
 
 struct Shade {
@@ -42,24 +42,20 @@ private:
 		const unsigned VBO;
 
 		Base(std::string_view label);
+		void Run() const;
 
 	protected:
-		void Run();
 		void Texture(const unsigned index, const unsigned id) const;
 		//void Block(const unsigned tx, const unsigned id);
 		void Attribute(const unsigned size) const;
 		void Attribute(const unsigned index, const unsigned size) const;
 		void Attribute() const;
-		template<class Type>
-		void Attribute(const unsigned index, const Type& attr) const {
-			glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(Type), &attr);
-		};
+		void Vertex(const unsigned offset, const unsigned size, void* attr) const;
 	};
 private:
 	template<const std::string_view& label, class Textures, class Blocks, class Attributes>
 	struct Instant :
-		Base,
-		Attributes
+		Base
 	{
 		Instant();
 		template<const std::string_view& label>
@@ -67,8 +63,8 @@ private:
 			Base::Texture(Textures::Index<label>::value, id);
 		}
 		template<const std::string_view& label>
-		void Attribute(Attributes::template value<label>::template type& attr) const {
-			Base::Attribute(attr);
+		void Vertex(Attributes::template Value<Attributes::template Index<label>::value>::template type attr) const {
+			Base::Vertex(Attributes::template Offset<0>::value, sizeof(attr), &attr);
 		}
 	private:
 		template<unsigned... Is>
@@ -90,7 +86,7 @@ Shade::Instant<label, Textures, Blocks, Attributes>::Instant() :
 template<const std::string_view& label, class Textures, class Blocks, class Attributes>
 template<unsigned... Is>
 void Shade::Instant<label, Textures, Blocks, Attributes>::Attribute(std::integer_sequence<unsigned, Is...>) const {
-	Base::Attribute((Attributes::template value<Is>::size + ...));
-	(Base::Attribute(Is, Attributes::template value<Is>::size), ...);
+	Base::Attribute((Attributes::template Value<Is>::size + ...));
+	(Base::Attribute(Is, Attributes::template Value<Is>::size), ...);
 	Base::Attribute();
 }

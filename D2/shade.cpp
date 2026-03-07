@@ -59,15 +59,17 @@ void Shade::Base::Attribute() const {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 }
-void Shade::Base::Run() {
+void Shade::Base::Vertex(const unsigned offset, const unsigned size, void* attr) const {
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferSubData(GL_ARRAY_BUFFER, offset, size, attr);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+};
+void Shade::Base::Run() const {
 	glUseProgram(prog);
 	glBindVertexArray(VAO);
-
-	//glm::ivec4 data{1,1,-1,-1};
-	//glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(glm::ivec4), &data);
-
 	glDrawArrays(GL_POINTS, 0, 1);
 	glBindVertexArray(0);
+	glfwSwapBuffers(glfwGetCurrentContext());
 }
 void Shade::Base::Texture(const unsigned index, const unsigned id) const {
 	glActiveTexture(GL_TEXTURE0 + index);
