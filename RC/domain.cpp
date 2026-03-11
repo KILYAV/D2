@@ -45,7 +45,7 @@ Bitmap LoadBitmap(const std::filesystem::path& direct) {
 	Bitmap bitmap{ data, { X,Y }, { (X + 1) >> 1, (Y + 1) >> 1 } };
 
 	auto [size, pos] { SizePosBMP(bitmap) };
-	return bitmap.Size(size, pos);
+	return bitmap.Size(size, { pos.x, pos.y });
 }
 png::Png LoadPng(const std::filesystem::path& direct) {
 	std::string label{ direct.string() };

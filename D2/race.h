@@ -24,6 +24,7 @@ public:
 private:
 	struct Resource {
 		expr::map<race::choice, Bitmap> land;
+		Bitmap menu;
 		Resource();
 	} static const resource;
 public:

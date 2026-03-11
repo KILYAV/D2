@@ -1,5 +1,5 @@
 ﻿#define STORE_LOAD_IMPLEMENTATION
-#include "../../utility/store_load.h"
+#include <utility/store_load.h>
 
 #include "uniform.h"
 #include "frame.h"

@@ -14,8 +14,8 @@ png::Png LoadPng(const std::filesystem::path& direct);
 std::vector<Bitmap> LoadVectorBitmap(const std::filesystem::path& direct);
 std::vector<png::Png> LoadVectorPng(const std::filesystem::path& direct);
 
-std::map<std::string, Bitmap> LoadRace(const std::filesystem::path& direct);
 std::map<std::string, png::Png> LoadMapPng(const std::filesystem::path& direct);
+std::map<std::string, std::vector<char>> LoadRace(const std::filesystem::path& direct);
 std::map<std::string, std::vector<char>> LoadInterf(const std::filesystem::path& direct);
 std::map<std::string, std::vector<char>> LoadBattle(const std::filesystem::path& direct);
 std::map<std::string, std::map<std::string, std::string>> LoadShade(const std::filesystem::path& path);

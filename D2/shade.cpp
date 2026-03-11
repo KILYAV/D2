@@ -51,8 +51,8 @@ void Shade::Base::Attribute(const unsigned size) const {
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, size, NULL, GL_DYNAMIC_DRAW);
 }
-void Shade::Base::Attribute(const unsigned index, const unsigned size) const {
-	glVertexAttribPointer(index, size / sizeof(float), GL_FLOAT, GL_FALSE, size, NULL);
+void Shade::Base::Attribute(const unsigned offset, const unsigned size, const unsigned index) const {
+	glVertexAttribPointer(index, size / sizeof(float), GL_FLOAT, GL_FALSE, size, (void*)offset);
 	glEnableVertexAttribArray(index);
 }
 void Shade::Base::Attribute() const {
